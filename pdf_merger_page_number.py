@@ -1,3 +1,13 @@
+"""
+Created on Tue Nov 17 11:09:21 2020
+
+@author: user1
+
+pip install reportlab
+
+output file is named output_withpagenumber
+"""
+
 import sys
 import os
 import reportlab
@@ -5,7 +15,7 @@ from reportlab.lib.units import mm
 from reportlab.pdfgen import canvas
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
-from PyPDF2 import PdfFileWriter, PdfFileReader
+from PyPDF2 import PdfWriter, PdfReader
 def create_pdf_with_pagenumber(tmp, num):
     '''create tmp pdf that only include page number'''
     pdfmetrics.registerFont(
@@ -24,20 +34,20 @@ def main():
     else:
         path = os.path.basename(sys.argv[1])
     tmp = "./pdf_merger_output/tmp.pdf"
-    dst_pdf = PdfFileWriter()
+    dst_pdf = PdfWriter()
     with open(path, 'rb') as f:
-        src_pdf = PdfFileReader(f, strict=False)
-        n = src_pdf.getNumPages()
+        src_pdf = PdfReader(f, strict=False)
+        n = len(src_pdf.pages)
         create_pdf_with_pagenumber(tmp, n)
         with open(tmp, 'rb') as ftmp:
-            num_pdf = PdfFileReader(ftmp)
+            num_pdf = PdfReader(ftmp)
             for i in range(n):
                 print('page: %d of %d' % (i+1, n))
-                page = src_pdf.getPage(i)
-                num_layer = num_pdf.getPage(i)
-                page.mergePage(num_layer)
-                dst_pdf.addPage(page)
-        if dst_pdf.getNumPages():
+                page = src_pdf.pages[i]
+                num_layer = num_pdf.pages[i]
+                page.merge_page(num_layer)
+                dst_pdf.add_page(page)
+        if len(dst_pdf.pages):
             output = '.{}_withpagenumber.pdf'.format(path.split('.')[1])
             with open(output, 'wb') as f:
                 dst_pdf.write(f)

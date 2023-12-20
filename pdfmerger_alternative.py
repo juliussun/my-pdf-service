@@ -3,7 +3,10 @@
 Created on Tue Nov 17 11:09:21 2020
 
 @author: user1
+
+pip install PyMuPDF
 """
+
 import fitz
 import os
 folder = r'./pdf_merger_output'
@@ -14,7 +17,7 @@ for filename in filelist:
     path = os.path.join(folder, filename) # pdf的绝对路径
     print(path)
     doc = fitz.open(path)
-    doc_merger.insertPDF(doc)
+    doc_merger.insert_pdf(doc)
 doc_merger.save(r'./pdf_merger_output/output.pdf')
     
 '''
