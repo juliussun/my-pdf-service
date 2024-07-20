@@ -7,10 +7,10 @@ Created on Tue Nov 17 11:09:21 2020
 
 import pymupdf
 import os
-from typing import Optional
+from typing import Optional, Dict
 
 
-def pdf_merger(folder: str, output_folder: Optional[str]) -> dict[str, str]:
+def pdf_merger(folder: str, output_folder: Optional[str]) -> Dict[str, str]:
     filelist = os.listdir(folder)
     filelist.sort()
     doc_merger = pymupdf.open()
