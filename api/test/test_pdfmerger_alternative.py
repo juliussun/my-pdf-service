@@ -16,7 +16,7 @@ def setup_test_env():
             doc.save(os.path.join(test_folder, f"test_{i}.pdf"))
         yield test_folder
 
-def test_pdf_merger_ouput_path(setup_test_env:str):
+def test_pdf_merger_ouput_path(setup_test_env):
     with tempfile.TemporaryDirectory() as temp_dir:
         output_folder = os.path.join(temp_dir, "test_output")
         os.makedirs(output_folder, exist_ok=True)
